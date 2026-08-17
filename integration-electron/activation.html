@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Activer Caflo</title>
+<style>
+  :root { --ink:#2A1810; --ink2:#3B2214; --cream:#FAF7F2; --line:#EAE1D5; --muted:#6F6055; --rouge:#A63C28; --vert:#5E7C4C; }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; padding:38px 34px; background:var(--cream); color:var(--ink);
+    font-family:'Segoe UI', system-ui, sans-serif; -webkit-font-smoothing:antialiased;
+    user-select:none;
+  }
+  h1 { margin:0; font-size:23px; font-weight:700; letter-spacing:-0.02em; }
+  p  { margin:10px 0 0; font-size:14px; line-height:1.6; color:var(--muted); }
+  label { display:block; margin-top:26px; font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#9C8B7C; }
+  input {
+    width:100%; margin-top:9px; padding:14px 16px;
+    border:1px solid var(--line); border-radius:11px; background:#fff;
+    font-family:'Consolas', ui-monospace, monospace; font-size:17px; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--ink); user-select:text;
+  }
+  input:focus { outline:2px solid var(--ink2); outline-offset:1px; border-color:transparent; }
+  button {
+    width:100%; margin-top:18px; padding:14px 20px; border:0; border-radius:11px;
+    background:var(--ink2); color:#F7F1E8; font-size:15px; font-weight:600;
+    font-family:inherit; cursor:pointer;
+  }
+  button:hover:not(:disabled) { background:#2E1A0F; }
+  button:disabled { opacity:.55; cursor:default; }
+  .message { margin-top:16px; padding:13px 15px; border-radius:10px; font-size:13.5px; line-height:1.5; display:none; }
+  .message.visible { display:block; }
+  .message.erreur { background:#FBEDEA; color:var(--rouge); }
+  .message.succes { background:#EDF3E9; color:var(--vert); }
+  .aide { margin-top:24px; padding-top:20px; border-top:1px solid var(--line); font-size:13px; color:var(--muted); }
+  .aide a { color:var(--ink2); font-weight:600; }
+</style>
+</head>
+<body>
+  <h1>Activer votre essai Caflo</h1>
+  <p>Saisissez la clé reçue lors du téléchargement. Une connexion internet est
+     nécessaire pour cette étape uniquement — Caflo fonctionne ensuite hors ligne.</p>
+
+  <label for="cle">Clé d'essai</label>
+  <input id="cle" type="text" placeholder="CAFLO-XXXX-XXXX-XXXX" maxlength="22"
+         autocomplete="off" spellcheck="false" autofocus>
+
+  <button id="valider" type="button">Activer</button>
+
+  <div class="message" id="message" role="status" aria-live="polite"></div>
+
+  <div class="aide">
+    Pas encore de clé ? Demandez-la sur <a href="#" id="lien-site">caflo.dz</a>
+    ou appelez le +213 673 35 61 65.
+  </div>
+
+<script>
+  const champ = document.getElementById('cle');
+  const bouton = document.getElementById('valider');
+  const message = document.getElementById('message');
+
+  // Formatage à la saisie : CAFLO-XXXX-XXXX-XXXX
+  champ.addEventListener('input', () => {
+    let brut = champ.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+    if (brut.startsWith('CAFLO')) brut = brut.slice(5);
+    const morceaux = brut.match(/.{1,4}/g)?.slice(0, 3) ?? [];
+    champ.value = morceaux.length ? 'CAFLO-' + morceaux.join('-') : '';
+  });
+
+  champ.addEventListener('keydown', e => { if (e.key === 'Enter') bouton.click(); });
+
+  function afficher(texte, type) {
+    message.textContent = texte;
+    message.className = 'message visible ' + type;
+  }
+
+  bouton.addEventListener('click', async () => {
+    bouton.disabled = true;
+    bouton.textContent = 'Activation…';
+    message.className = 'message';
+
+    // Exposé par le preload : contextBridge.exposeInMainWorld('caflo', { activer })
+    const resultat = await window.caflo.activer(champ.value);
+
+    if (resultat.ok) {
+      afficher(`Essai activé — formule ${resultat.formule}, ${resultat.heuresRestantes} h restantes. Ouverture de Caflo…`, 'succes');
+      setTimeout(() => window.caflo.terminer(), 1600);
+    } else {
+      afficher(resultat.message, 'erreur');
+      bouton.disabled = false;
+      bouton.textContent = 'Activer';
+    }
+  });
+
+  document.getElementById('lien-site').addEventListener('click', e => {
+    e.preventDefault();
+    window.caflo.ouvrirSite();
+  });
+</script>
+</body>
+</html>

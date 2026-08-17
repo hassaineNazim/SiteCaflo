@@ -10,3 +10,11 @@ Desktop.ini
 
 # Node (si un outillage est ajouté plus tard)
 node_modules/
+
+# Cloudflare
+.wrangler/
+.dev.vars
+
+# Clés de licence — ne jamais commiter la partie privée
+*.jwk
+cle-privee*

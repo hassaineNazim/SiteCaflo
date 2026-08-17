@@ -1,0 +1,17 @@
+name = "caflo-licence"
+main = "src/index.js"
+compatibility_date = "2026-01-15"
+
+# Origines autorisées à appeler /api/essai (CORS). La première sert de valeur
+# par défaut. Ajoutez votre domaine de production dès qu'il est en ligne.
+[vars]
+ORIGINES_AUTORISEES = "https://caflo.dz,https://www.caflo.dz,http://localhost:4321"
+URL_TELECHARGEMENT = "https://github.com/hassaineNazim/caflo-releases/releases/latest/download/Caflo-Setup.exe"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "caflo-licences"
+database_id = "REMPLACER_PAR_L_ID_RENVOYE_PAR_WRANGLER"
+
+# Secret à définir hors du fichier (il ne doit jamais être commité) :
+#   npx wrangler secret put CLE_PRIVEE_JWK

@@ -4,6 +4,22 @@
 (function () {
   'use strict';
 
+  /* ---------------------------------------------------------
+     Configuration — à renseigner avant la mise en ligne
+     --------------------------------------------------------- */
+  var CONFIG = {
+    // URL du Worker Cloudflare (dossier serveur-licence/)
+    apiLicence: 'https://caflo-licence.exemple.workers.dev',
+    // Dépôt GitHub qui héberge les installeurs
+    depotReleases: 'hassaineNazim/caflo-releases',
+    // Nom de l'asset, SANS numéro de version : c'est ce qui fait
+    // fonctionner l'URL /releases/latest/download/
+    fichierInstalleur: 'Caflo-Setup.exe'
+  };
+
+  CONFIG.urlTelechargement = 'https://github.com/' + CONFIG.depotReleases +
+    '/releases/latest/download/' + CONFIG.fichierInstalleur;
+
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---------------------------------------------------------
@@ -81,7 +97,7 @@
     });
 
     window.addEventListener('resize', function () {
-      if (window.innerWidth >= 1120) setOpen(false);
+      if (window.innerWidth >= 1220) setOpen(false);
     });
   })();
 
@@ -238,6 +254,165 @@
     }, { rootMargin: '-45% 0px -50% 0px' });
 
     targets.forEach(function (t) { io.observe(t); });
+  })();
+
+  /* ---------------------------------------------------------
+     Modale d'essai — formulaire puis clé délivrée
+     --------------------------------------------------------- */
+  (function essai() {
+    var modal = document.getElementById('modal-essai');
+    var form = document.getElementById('form-essai');
+    var succes = document.getElementById('essai-succes');
+    if (!modal || !form || !succes) return;
+
+    var boite = modal.querySelector('.modal__boite');
+    var erreur = document.getElementById('form-erreur');
+    var envoyer = document.getElementById('form-envoyer');
+    var champFormule = document.getElementById('f-formule');
+    var dernierFocus = null;
+
+    function ouvrir(formule) {
+      dernierFocus = document.activeElement;
+      if (formule && champFormule) champFormule.value = formule;
+      modal.hidden = false;
+      document.body.style.overflow = 'hidden';
+      var premier = succes.hidden ? document.getElementById('f-nom') : document.getElementById('copier-cle');
+      if (premier) premier.focus();
+    }
+
+    function fermer() {
+      modal.hidden = true;
+      document.body.style.overflow = '';
+      if (dernierFocus) dernierFocus.focus();
+    }
+
+    document.addEventListener('click', function (e) {
+      var declencheur = e.target.closest('[data-ouvrir-essai]');
+      if (declencheur) {
+        e.preventDefault();
+        ouvrir(declencheur.dataset.formule);
+        return;
+      }
+      if (e.target.closest('[data-fermer-essai]')) fermer();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (modal.hidden) return;
+      if (e.key === 'Escape') { fermer(); return; }
+      if (e.key !== 'Tab') return;
+
+      // Piège à focus : on reste dans la modale tant qu'elle est ouverte.
+      var focusables = boite.querySelectorAll(
+        'a[href], button:not([disabled]), input:not([tabindex="-1"]), select, textarea'
+      );
+      var visibles = Array.prototype.filter.call(focusables, function (el) {
+        return el.offsetParent !== null;
+      });
+      if (!visibles.length) return;
+
+      var premier = visibles[0];
+      var dernier = visibles[visibles.length - 1];
+      if (e.shiftKey && document.activeElement === premier) { e.preventDefault(); dernier.focus(); }
+      else if (!e.shiftKey && document.activeElement === dernier) { e.preventDefault(); premier.focus(); }
+    });
+
+    function afficherErreur(texte) {
+      erreur.textContent = texte;
+      erreur.hidden = false;
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      erreur.hidden = true;
+
+      var donnees = {};
+      new FormData(form).forEach(function (valeur, cle) { donnees[cle] = String(valeur).trim(); });
+
+      // Validation côté client — le serveur revalide de toute façon.
+      var manquants = ['nom', 'etablissement', 'telephone'].filter(function (c) { return !donnees[c]; });
+      form.querySelectorAll('input').forEach(function (i) { i.removeAttribute('aria-invalid'); });
+      if (manquants.length) {
+        manquants.forEach(function (c) {
+          var champ = form.querySelector('[name="' + c + '"]');
+          if (champ) champ.setAttribute('aria-invalid', 'true');
+        });
+        form.querySelector('[name="' + manquants[0] + '"]').focus();
+        afficherErreur('Merci de renseigner votre nom, votre établissement et votre téléphone.');
+        return;
+      }
+
+      envoyer.disabled = true;
+      envoyer.textContent = 'Envoi…';
+
+      fetch(CONFIG.apiLicence + '/api/essai', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(donnees)
+      })
+        .then(function (r) { return r.json().then(function (c) { return { ok: r.ok, corps: c }; }); })
+        .then(function (res) {
+          if (!res.ok) throw new Error(res.corps.erreur || 'Demande refusée.');
+
+          document.getElementById('succes-cle').textContent = res.corps.cle;
+          document.getElementById('succes-lien').href = res.corps.telechargement || CONFIG.urlTelechargement;
+          if (res.corps.deja_demande) {
+            document.getElementById('succes-intro').textContent =
+              'Une clé avait déjà été émise pour ce numéro — c’est la même, elle reste valable.';
+          }
+          form.hidden = true;
+          succes.hidden = false;
+          boite.scrollTop = 0;
+          document.getElementById('copier-cle').focus();
+        })
+        .catch(function (err) {
+          afficherErreur(
+            err.message === 'Failed to fetch'
+              ? 'Connexion au serveur impossible. Réessayez, ou appelez le +213 673 35 61 65.'
+              : err.message
+          );
+        })
+        .then(function () {
+          envoyer.disabled = false;
+          envoyer.textContent = 'Obtenir ma clé et télécharger';
+        });
+    });
+
+    var copier = document.getElementById('copier-cle');
+    if (copier) {
+      copier.addEventListener('click', function () {
+        var cle = document.getElementById('succes-cle').textContent;
+        var fini = function () {
+          copier.textContent = 'Copiée';
+          setTimeout(function () { copier.textContent = 'Copier'; }, 2000);
+        };
+        if (navigator.clipboard) navigator.clipboard.writeText(cle).then(fini, function () {});
+        else fini();
+      });
+    }
+  })();
+
+  /* ---------------------------------------------------------
+     Version et taille de l'installeur, lues sur GitHub
+     --------------------------------------------------------- */
+  (function infosRelease() {
+    var champVersion = document.getElementById('dl-version');
+    var champTaille = document.getElementById('dl-taille');
+    if (!champVersion || !champTaille) return;
+
+    fetch('https://api.github.com/repos/' + CONFIG.depotReleases + '/releases/latest')
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+      .then(function (release) {
+        champVersion.textContent = release.tag_name || '—';
+        var asset = (release.assets || []).filter(function (a) {
+          return a.name === CONFIG.fichierInstalleur;
+        })[0];
+        if (asset) champTaille.textContent = (asset.size / 1048576).toFixed(0) + ' Mo';
+      })
+      .catch(function () {
+        // Pas encore de release publiée, ou quota de l'API atteint.
+        champVersion.textContent = 'bientôt disponible';
+        champTaille.textContent = '—';
+      });
   })();
 
   /* ---------------------------------------------------------

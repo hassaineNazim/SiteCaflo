@@ -1,0 +1,14 @@
+{
+  "name": "Caflo — Système de caisse",
+  "short_name": "Caflo",
+  "description": "Le logiciel de caisse des cafés et restaurants.",
+  "lang": "fr",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAF7F2",
+  "theme_color": "#3B2214",
+  "icons": [
+    { "src": "img/favicon-180.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "img/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

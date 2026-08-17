@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Caflo — Le logiciel de caisse des cafés et restaurants</title>
+<meta name="description" content="Caflo est le logiciel de caisse Windows des cafés et restaurants : commandes, plan de salle, cuisine, encaissement, stock, charges et statistiques dans un seul système installé chez vous.">
+<meta name="theme-color" content="#3B2214">
+<link rel="canonical" href="https://caflo.dz/">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Caflo">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Caflo — Le logiciel de caisse des cafés et restaurants">
+<meta property="og:description" content="Commandes, tables, cuisine, encaissement, stock et performances dans un seul logiciel conçu pour la restauration.">
+<meta property="og:url" content="https://caflo.dz/">
+<meta property="og:image" content="https://caflo.dz/img/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Caflo — Le logiciel de caisse des cafés et restaurants">
+<meta name="twitter:description" content="Commandes, tables, cuisine, encaissement, stock et performances dans un seul logiciel conçu pour la restauration.">
+<meta name="twitter:image" content="https://caflo.dz/img/og-image.jpg">
+
+<link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="img/favicon-180.png">
+<link rel="manifest" href="site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="img/hero-dashboard-podium.webp" fetchpriority="high">
+<link rel="stylesheet" href="styles.css">
+<noscript><style>
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
+  .preloader { display: none !important; }
+  .header__bar { flex-wrap: wrap; }
+  .nav { display: flex !important; flex-wrap: wrap; justify-content: center; }
+  .burger { display: none !important; }
+</style></noscript>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Caflo",
+  "applicationCategory": "BusinessApplication",
+  "applicationSubCategory": "Point of Sale",
+  "operatingSystem": "Windows",
+  "description": "Logiciel de caisse pour cafés et restaurants : prise de commande, plan de salle, tickets cuisine, encaissement, stock, charges et statistiques.",
+  "inLanguage": "fr",
+  "url": "https://caflo.dz/",
+  "image": "https://caflo.dz/img/og-image.jpg",
+  "offers": { "@type": "Offer", "availability": "https://schema.org/InStock" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Caflo",
+    "email": "contact@caflo.dz",
+    "telephone": "+213673356165",
+    "logo": "https://caflo.dz/img/icon-512.png"
+  }
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#top">Aller au contenu</a>
+
+<!-- ============================ PRELOADER ============================ -->
+<div class="preloader" id="preloader" aria-hidden="true">
+  <div class="preloader__mark">
+    <img src="img/caflo-wordmark-light.webp" alt="" width="520" height="158" class="preloader__ghost">
+    <div class="preloader__fill">
+      <img src="img/caflo-wordmark-light.webp" alt="" width="520" height="158">
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- ============================ HEADER ============================ -->
+  <header class="header">
+    <div class="header__bar">
+      <a class="brand" href="#top" aria-label="Caflo — accueil">
+        <img class="brand__mark" src="img/caflo-mark.webp" alt="" width="160" height="184">
+        <span class="brand__text">
+          <img class="brand__wordmark" src="img/caflo-wordmark-dark.webp" alt="Caflo" width="520" height="158">
+          <span class="brand__tagline">Système de caisse</span>
+        </span>
+      </a>
+
+      <nav class="nav" id="nav" aria-label="Navigation principale">
+        <a class="nav__link" href="#produit">Produit</a>
+        <a class="nav__link" href="#fonctionnalites">Fonctionnalités</a>
+        <a class="nav__link" href="#versions">Versions</a>
+        <a class="nav__link" href="#solutions">Solutions</a>
+        <a class="nav__link" href="#tarifs">Tarifs</a>
+        <a class="nav__link" href="#contact">Contact</a>
+      </nav>
+
+      <div class="header__actions">
+        <a class="btn btn--dark btn--sm" href="#contact">Demander une démo</a>
+        <button class="burger" id="burger" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================ MOBILE MENU ============================ -->
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <nav class="mobile-menu__nav" aria-label="Navigation mobile">
+      <a href="#produit">Produit</a>
+      <a href="#fonctionnalites">Fonctionnalités</a>
+      <a href="#versions">Versions</a>
+      <a href="#solutions">Solutions</a>
+      <a href="#tarifs">Tarifs</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="mobile-menu__foot">
+      <a class="btn btn--dark" href="#contact">Demander une démo</a>
+      <a class="mobile-menu__tel" href="tel:+213673356165">+213 673 35 61 65</a>
+    </div>
+  </div>
+
+  <main>
+
+  <!-- ============================ HERO ============================ -->
+  <section class="hero" id="top">
+    <div class="hero__glow" aria-hidden="true"></div>
+    <div class="hero__inner">
+
+      <div class="hero__copy">
+        <p class="pill" data-reveal>
+          <span class="pill__dot" aria-hidden="true"></span>
+          Logiciel Windows installé localement
+        </p>
+        <h1 class="hero__title" data-reveal>
+          Votre restaurant,<br><span class="accent">sous contrôle.</span>
+        </h1>
+        <p class="hero__lede" data-reveal>
+          Commandes, tables, cuisine, encaissement, stock et performances dans un seul logiciel conçu pour la restauration.
+        </p>
+        <div class="hero__cta" data-reveal>
+          <a class="btn btn--dark" href="#contact">Demander une démo <span class="btn__arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn--light" href="#produit">Découvrir le produit <span class="btn__arrow" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+
+      <div class="hero__visual">
+        <div class="hero__visual-glow" aria-hidden="true"></div>
+        <div class="hero__stage">
+          <div class="hero__shadow" aria-hidden="true"></div>
+          <img class="hero__shot" src="img/hero-dashboard-podium.webp" alt="Caflo — tableau de bord du logiciel de caisse présenté sur un podium" width="1536" height="1024" fetchpriority="high" decoding="async">
+
+          <div class="floaters" aria-hidden="true">
+            <div class="floater floater--a">
+              <div>
+                <div class="floater__label">Ticket moyen</div>
+                <div class="floater__value">
+                  <span class="floater__amount">3 765 DA</span>
+                  <span class="floater__meta">17 cmd</span>
+                </div>
+              </div>
+              <span class="floater__icon">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.7 21a2 2 0 0 1-3.4 0"></path></svg>
+              </span>
+            </div>
+
+            <div class="floater floater--b">
+              <span class="floater__dot floater__dot--green"></span>
+              <div>
+                <div class="floater__title">Suivi des ventes</div>
+                <div class="floater__sub">Temps réel · 30 jours</div>
+              </div>
+            </div>
+
+            <div class="floater floater--c">
+              <span class="floater__dot floater__dot--red"></span>
+              <div>
+                <div class="floater__title">Bénéfice &amp; marge</div>
+                <div class="floater__sub">Charges déduites</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================ PROOF STRIP ============================ -->
+  <section class="proof" aria-label="Ils utilisent Caflo">
+    <p class="proof__kicker">Déjà en service dans des cafés et restaurants</p>
+    <div class="marquee">
+      <div class="marquee__track">
+        <div class="marquee__group">
+          <img src="img/client-smashki.webp" alt="Smashki" width="260" height="260" loading="lazy">
+          <img src="img/client-emporio.webp" alt="Emporio Café" width="225" height="225" loading="lazy">
+          <span class="marquee__slot">Logo client</span>
+          <span class="marquee__slot">Logo client</span>
+          <span class="marquee__slot">Logo client</span>
+          <span class="marquee__slot">Logo client</span>
+          <span class="marquee__slot">Logo client</span>
+          <span class="marquee__slot">Logo client</span>
+        </div>
+        <div class="marquee__group" aria-hidden="true">
+          <img src="img/client-smashki.webp" alt="" width="260" height="260" loading="lazy">
+          <img src="img/client-emporio.webp" alt="" width="225" height="225" loading="lazy">
+          <span class="marquee__slot">Logo client</span>
+          <span class="marquee__slot">Logo client</span>
+          <span class="marquee__slot">Logo client</span>
+          <span class="marquee__slot">Logo client</span>
+          <span class="marquee__slot">Logo client</span>
+          <span class="marquee__slot">Logo client</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ PRODUIT ============================ -->
+  <section class="section" id="produit">
+    <div class="wrap">
+      <header class="section__head" data-reveal>
+        <p class="kicker">Un système complet</p>
+        <h2 class="h2">Tout le service dans un seul logiciel.</h2>
+        <p class="lede">De la première commande au rapport de fin de journée — sans jongler entre plusieurs outils.</p>
+      </header>
+
+      <div class="split" data-reveal>
+        <div class="split__copy">
+          <p class="tag">Prise de commande</p>
+          <h3 class="h3">Une commande en quelques gestes.</h3>
+          <p class="body">Catalogue produits lisible, sur place ou à emporter, panier toujours visible. Le serveur garde les yeux sur la salle, pas sur l'écran.</p>
+        </div>
+        <figure class="shot">
+          <img src="img/screen-commande.webp" alt="Écran de prise de commande de Caflo avec le catalogue produits et le panier" width="1500" height="797" loading="lazy" decoding="async">
+        </figure>
+      </div>
+
+      <div class="split split--reverse" data-reveal>
+        <figure class="shot">
+          <img src="img/screen-plan-salle.webp" alt="Plan de salle Caflo avec l'état des tables" width="1500" height="798" loading="lazy" decoding="async">
+        </figure>
+        <div class="split__copy">
+          <p class="tag">Plan de salle &amp; tables</p>
+          <h3 class="h3">Votre salle, telle qu'elle est.</h3>
+          <p class="body">Tables libres, occupées, en attente d'addition. Ouvrir une caisse, changer de table, pré-addition ou encaissement se font depuis le même écran.</p>
+        </div>
+      </div>
+
+      <div class="split" data-reveal>
+        <div class="split__copy">
+          <p class="tag">Commandes &amp; tickets</p>
+          <h3 class="h3">Chaque commande retrouvée en un instant.</h3>
+          <p class="body">Historique complet, filtres sur place / à emporter / en attente, reçu détaillé et réimpression du ticket quand le client le demande.</p>
+        </div>
+        <figure class="shot">
+          <img src="img/screen-commandes.webp" alt="Historique des commandes dans Caflo avec le détail d'un reçu" width="1500" height="795" loading="lazy" decoding="async">
+        </figure>
+      </div>
+
+      <div class="split split--reverse" data-reveal>
+        <figure class="shot">
+          <img src="img/screen-stock.webp" alt="Module stock et approvisionnement de Caflo" width="1500" height="798" loading="lazy" decoding="async">
+        </figure>
+        <div class="split__copy">
+          <p class="tag">Stock &amp; approvisionnement</p>
+          <h3 class="h3">Savoir avant d'être à court.</h3>
+          <p class="body">Valeur du stock, seuils d'alerte, prévisions de rupture et péremptions. Les recettes relient chaque vente à vos ingrédients.</p>
+        </div>
+      </div>
+
+      <div class="split" data-reveal>
+        <div class="split__copy">
+          <p class="tag">Rapports &amp; statistiques</p>
+          <h3 class="h3">Les chiffres qui décident.</h3>
+          <p class="body">Chiffre d'affaires, ticket moyen, bénéfice après charges, performance des serveurs. Tout se met à jour au fil du service.</p>
+        </div>
+        <figure class="shot">
+          <img src="img/screen-dashboard.webp" alt="Tableau de bord Caflo : chiffre d'affaires, bénéfice et performance de l'équipe" width="1500" height="771" loading="lazy" decoding="async">
+        </figure>
+      </div>
+
+      <!-- Feature cards -->
+      <div class="cards" id="fonctionnalites" data-reveal>
+        <article class="card">
+          <div class="card__media">
+            <img src="img/screen-tickets.webp" alt="Personnalisation du ticket de caisse dans Caflo" width="1500" height="797" loading="lazy" decoding="async">
+          </div>
+          <div class="card__body">
+            <h3 class="card__title">Tickets &amp; impression</h3>
+            <p class="card__text">Ticket 58 ou 80 mm personnalisable, tickets cuisine, aperçu fidèle à l'impression.</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card__media">
+            <img src="img/screen-factures.webp" alt="Suivi des factures et charges dans Caflo" width="1500" height="796" loading="lazy" decoding="async">
+          </div>
+          <div class="card__body">
+            <h3 class="card__title">Factures &amp; charges</h3>
+            <p class="card__text">Électricité, loyer, impôts, équipement — déduits automatiquement du bénéfice.</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card__media">
+            <img class="card__img--center" src="img/screen-profils.webp" alt="Sélection de profil et sécurité dans Caflo" width="1500" height="797" loading="lazy" decoding="async">
+          </div>
+          <div class="card__body">
+            <h3 class="card__title">Profils &amp; sécurité</h3>
+            <p class="card__text">Chaque employé son profil et ses droits. Journal d'audit et sessions de caisse tracées.</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card__media">
+            <img src="img/screen-valeur-stock.webp" alt="Analyse de la valeur du stock et des marges dans Caflo" width="1500" height="797" loading="lazy" decoding="async">
+          </div>
+          <div class="card__body">
+            <h3 class="card__title">Coûts &amp; marges</h3>
+            <p class="card__text">Où part la valeur, quels ingrédients pèsent, quelle marge reste réellement.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ JOURNEY ============================ -->
+  <section class="journey" id="parcours">
+    <div class="wrap">
+      <header class="section__head" data-reveal>
+        <p class="kicker kicker--light">Fluidité du service</p>
+        <h2 class="h2 h2--light">Le trajet d'une commande, de la table au rapport.</h2>
+      </header>
+
+      <div class="journey__grid" data-reveal>
+        <div class="journey__steps" id="journey-steps" role="tablist" aria-label="Étapes du parcours d'une commande">
+          <button class="step is-active" type="button" role="tab" id="step-tab-0" aria-selected="true" aria-controls="journey-panel" data-shot="img/app-serveur-commande.webp" data-caption="Application serveur — commande de la table 11" data-alt="Application serveur Caflo — prise de commande à la table 11">
+            <span class="step__n">1</span>
+            <span class="step__body">
+              <span class="step__title">Le serveur prend la commande</span>
+              <span class="step__desc">Directement à la table, depuis son téléphone, puis envoi à la caisse.</span>
+            </span>
+          </button>
+          <button class="step" type="button" role="tab" id="step-tab-1" aria-selected="false" tabindex="-1" aria-controls="journey-panel" data-shot="img/screen-tickets.webp" data-caption="Réglages Impression — ticket cuisine" data-alt="Réglages d'impression du ticket cuisine dans Caflo">
+            <span class="step__n">2</span>
+            <span class="step__body">
+              <span class="step__title">La commande part en cuisine</span>
+              <span class="step__desc">Le ticket cuisine s'imprime automatiquement, sans redemander.</span>
+            </span>
+          </button>
+          <button class="step" type="button" role="tab" id="step-tab-2" aria-selected="false" tabindex="-1" aria-controls="journey-panel" data-shot="img/screen-plan-salle.webp" data-caption="Plan de Salle — état des tables" data-alt="Plan de salle Caflo montrant l'état des tables">
+            <span class="step__n">3</span>
+            <span class="step__body">
+              <span class="step__title">La cuisine prépare, la salle suit</span>
+              <span class="step__desc">La table passe en « prêt », le serveur voit l'état sans aller demander.</span>
+            </span>
+          </button>
+          <button class="step" type="button" role="tab" id="step-tab-3" aria-selected="false" tabindex="-1" aria-controls="journey-panel" data-shot="img/screen-commandes.webp" data-caption="Commandes — reçu de commande" data-alt="Reçu détaillé d'une commande dans Caflo">
+            <span class="step__n">4</span>
+            <span class="step__body">
+              <span class="step__title">La caisse encaisse</span>
+              <span class="step__desc">Total, reçu détaillé, impression du ticket client.</span>
+            </span>
+          </button>
+          <button class="step" type="button" role="tab" id="step-tab-4" aria-selected="false" tabindex="-1" aria-controls="journey-panel" data-shot="img/screen-dashboard.webp" data-caption="Tableau de bord — mis à jour en direct" data-alt="Tableau de bord Caflo mis à jour en direct">
+            <span class="step__n">5</span>
+            <span class="step__body">
+              <span class="step__title">Les statistiques se mettent à jour</span>
+              <span class="step__desc">CA, ticket moyen, performance des serveurs, marges.</span>
+            </span>
+          </button>
+        </div>
+
+        <div class="journey__viewer" id="journey-panel" role="tabpanel" aria-live="polite" aria-labelledby="step-tab-0">
+          <figure class="journey__frame">
+            <img id="journey-shot" src="img/app-serveur-commande.webp" alt="Application serveur Caflo — prise de commande à la table 11" width="1200" height="532" loading="lazy" decoding="async">
+          </figure>
+          <p class="journey__caption"><span class="journey__dot" aria-hidden="true"></span><span id="journey-caption">Application serveur — commande de la table 11</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ APP SERVEUR ============================ -->
+  <section class="section">
+    <div class="wrap split split--center">
+      <div class="split__copy" data-reveal>
+        <p class="kicker">Application serveur</p>
+        <h2 class="h2">La commande se prend à la table.</h2>
+        <p class="lede">Le serveur choisit sa table, compose la commande sur son téléphone et l'envoie. Elle remonte directement à la caisse et en cuisine — sans aller-retour au comptoir.</p>
+        <ul class="chips">
+          <li>Plan de salle sur mobile</li>
+          <li>Notes par article</li>
+          <li>Envoi à la caisse</li>
+          <li>Ticket cuisine automatique</li>
+        </ul>
+      </div>
+      <div class="phones" data-reveal>
+        <div class="phone">
+          <div class="phone__screen">
+            <img src="img/app-serveur-commande.webp" alt="Application serveur Caflo — prise de commande à la table" width="1200" height="532" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <div class="phone phone--offset">
+          <div class="phone__screen">
+            <img src="img/app-serveur-salle.webp" alt="Application serveur Caflo — plan de salle et sélection de table" width="1200" height="539" loading="lazy" decoding="async">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ ESPACE PATRON ============================ -->
+  <section class="section section--bleed">
+    <div class="patron">
+      <div class="patron__copy" data-reveal>
+        <p class="kicker">Espace patron</p>
+        <h2 class="h2">Votre restaurant, même quand vous n'y êtes pas.</h2>
+        <p class="lede">Une application dédiée au patron : chiffre d'affaires, bénéfice et marge, meilleures ventes, charges et performance de l'équipe — depuis votre téléphone.</p>
+        <ul class="bullets">
+          <li>
+            <span class="bullets__dot bullets__dot--dark" aria-hidden="true"></span>
+            <span><strong>CA &amp; bénéfice</strong><span>Évolution quotidienne, charges déduites, marge réelle.</span></span>
+          </li>
+          <li>
+            <span class="bullets__dot bullets__dot--copper" aria-hidden="true"></span>
+            <span><strong>Tableau de bord</strong><span>Commandes, ticket moyen et meilleures ventes du jour.</span></span>
+          </li>
+          <li>
+            <span class="bullets__dot bullets__dot--green" aria-hidden="true"></span>
+            <span><strong>Factures &amp; charges</strong><span>Électricité, eau, loyer, équipement — suivis au même endroit.</span></span>
+          </li>
+        </ul>
+      </div>
+      <div class="patron__visual" data-reveal>
+        <div class="patron__glow" aria-hidden="true"></div>
+        <img src="img/patron-phones.webp" alt="Application patron Caflo — tableau de bord, factures et performance de l'équipe sur téléphone" width="1400" height="933" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ LOCAL ============================ -->
+  <section class="section">
+    <div class="wrap">
+      <div class="local" data-reveal>
+        <div class="local__copy">
+          <p class="kicker">Fonctionnement local</p>
+          <h2 class="h2 h2--sm">Installé directement dans votre restaurant.</h2>
+          <p class="lede">Caflo est une application Windows qui tourne sur votre propre matériel. Vos données restent chez vous, et le logiciel s'ouvre aussi vite qu'un tiroir-caisse.</p>
+        </div>
+        <div class="local__grid">
+          <div class="fact">
+            <p class="fact__key">.exe</p>
+            <p class="fact__val">Application desktop Windows, pas d'abonnement navigateur.</p>
+          </div>
+          <div class="fact">
+            <p class="fact__key">Local</p>
+            <p class="fact__val">Installée sur place, au comptoir, sur votre poste de caisse.</p>
+          </div>
+          <div class="fact">
+            <p class="fact__key">Multi‑poste</p>
+            <p class="fact__val">Vos terminaux se synchronisent depuis les réglages Appareils &amp; Sync.</p>
+          </div>
+          <div class="fact fact--dark">
+            <p class="fact__key">Audit</p>
+            <p class="fact__val">Sessions de caisse et journal d'audit conservés pour chaque opération.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ VERSIONS ============================ -->
+  <section class="section" id="versions">
+    <div class="wrap">
+      <header class="section__head" data-reveal>
+        <p class="kicker">Versions</p>
+        <h2 class="h2">Quatre versions, une seule logique.</h2>
+        <p class="lede">Commencez par la caisse, ajoutez la salle, l'express ou tout à la fois. On passe d'une version à l'autre sans changer de logiciel.</p>
+      </header>
+
+      <div class="plans" data-reveal>
+        <article class="plan">
+          <div class="plan__head"><span class="plan__num">01</span><span class="plan__tag">Caisse seule</span></div>
+          <div class="plan__media"><img src="img/screen-commande.webp" alt="Caflo Caisse" width="1500" height="797" loading="lazy" decoding="async"></div>
+          <h3 class="plan__title">Caflo Caisse</h3>
+          <p class="plan__text">L'essentiel : encaisser, imprimer, suivre la journée. Un poste, sans rien de superflu.</p>
+          <ul class="plan__list">
+            <li><span class="plan__dot plan__dot--dark" aria-hidden="true"></span>Prise de commande &amp; encaissement</li>
+            <li><span class="plan__dot plan__dot--dark" aria-hidden="true"></span>Tickets 58 / 80 mm</li>
+            <li><span class="plan__dot plan__dot--dark" aria-hidden="true"></span>Rapport de fin de journée</li>
+          </ul>
+          <a class="plan__cta" href="#contact">Demander une démo <span aria-hidden="true">→</span></a>
+        </article>
+
+        <article class="plan">
+          <div class="plan__head"><span class="plan__num">02</span><span class="plan__tag">Service à table</span></div>
+          <div class="plan__media"><img src="img/screen-plan-salle.webp" alt="Caflo Salle" width="1500" height="798" loading="lazy" decoding="async"></div>
+          <h3 class="plan__title">Caflo Salle</h3>
+          <p class="plan__text">La caisse, plus l'application serveur et la synchronisation entre les postes.</p>
+          <ul class="plan__list">
+            <li><span class="plan__dot plan__dot--copper" aria-hidden="true"></span>Tout Caflo Caisse</li>
+            <li><span class="plan__dot plan__dot--copper" aria-hidden="true"></span>Application serveur sur téléphone</li>
+            <li><span class="plan__dot plan__dot--copper" aria-hidden="true"></span>Plan de salle &amp; sync multi-poste</li>
+          </ul>
+          <a class="plan__cta" href="#contact">Demander une démo <span aria-hidden="true">→</span></a>
+        </article>
+
+        <article class="plan">
+          <div class="plan__head"><span class="plan__num">03</span><span class="plan__tag">Emporté &amp; livré</span></div>
+          <div class="plan__media"><img src="img/screen-commandes.webp" alt="Caflo Express" width="1500" height="795" loading="lazy" decoding="async"></div>
+          <h3 class="plan__title">Caflo Express</h3>
+          <p class="plan__text">Pour le fast-food : file rapide, beeper client et suivi des livraisons.</p>
+          <ul class="plan__list">
+            <li><span class="plan__dot plan__dot--rust" aria-hidden="true"></span>Commande rapide au comptoir</li>
+            <li><span class="plan__dot plan__dot--rust" aria-hidden="true"></span>Beeper &amp; appel client</li>
+            <li><span class="plan__dot plan__dot--rust" aria-hidden="true"></span>Livraison : coursiers et adresses</li>
+          </ul>
+          <a class="plan__cta" href="#contact">Demander une démo <span aria-hidden="true">→</span></a>
+        </article>
+
+        <article class="plan plan--dark">
+          <div class="plan__head"><span class="plan__num">04</span><span class="plan__tag plan__tag--gold">Tout intégré</span></div>
+          <div class="plan__media plan__media--dark"><img src="img/screen-dashboard.webp" alt="Caflo Suite" width="1500" height="771" loading="lazy" decoding="async"></div>
+          <h3 class="plan__title">Caflo Suite</h3>
+          <p class="plan__text">L'ensemble des modules réunis : salle, express, stock, patron et rapports.</p>
+          <ul class="plan__list">
+            <li><span class="plan__dot plan__dot--gold" aria-hidden="true"></span>Caisse + Salle + Express</li>
+            <li><span class="plan__dot plan__dot--gold" aria-hidden="true"></span>Stock, recettes &amp; charges</li>
+            <li><span class="plan__dot plan__dot--gold" aria-hidden="true"></span>Espace patron &amp; statistiques</li>
+          </ul>
+          <a class="plan__cta" href="#contact">Demander une démo <span aria-hidden="true">→</span></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ SOLUTIONS ============================ -->
+  <section class="section" id="solutions">
+    <div class="wrap">
+      <header class="section__head" data-reveal>
+        <p class="kicker">Solutions</p>
+        <h2 class="h2">Pensé pour votre type d'établissement.</h2>
+      </header>
+
+      <div class="venues" data-reveal>
+        <article class="venue">
+          <div class="venue__media venue__media--empty"><span>photo — salle de restaurant</span></div>
+          <div class="venue__body">
+            <h3 class="venue__title">Restaurants</h3>
+            <p class="venue__text">Service à table, plan de salle, additions partagées.</p>
+          </div>
+        </article>
+        <article class="venue">
+          <div class="venue__media"><img src="img/venue-fastfood.webp" alt="Comptoir de fast-food équipé de Caflo" width="900" height="1200" loading="lazy" decoding="async"></div>
+          <div class="venue__body">
+            <h3 class="venue__title">Fast-food</h3>
+            <p class="venue__text">Commandes rapides, à emporter, files courtes.</p>
+          </div>
+        </article>
+        <article class="venue">
+          <div class="venue__media"><img src="img/venue-cafe.webp" alt="Comptoir de café équipé de Caflo" width="720" height="1280" loading="lazy" decoding="async"></div>
+          <div class="venue__body">
+            <h3 class="venue__title">Cafés</h3>
+            <p class="venue__text">Boissons, modificateurs, rotation rapide des tables.</p>
+          </div>
+        </article>
+        <article class="venue">
+          <div class="venue__media venue__media--empty"><span>photo — four à pizza</span></div>
+          <div class="venue__body">
+            <h3 class="venue__title">Pizzerias</h3>
+            <p class="venue__text">Sur place et à emporter, tickets cuisine dédiés.</p>
+          </div>
+        </article>
+        <article class="venue">
+          <div class="venue__media venue__media--empty"><span>photo — vitrine boulangerie</span></div>
+          <div class="venue__body">
+            <h3 class="venue__title">Boulangeries &amp; pâtisseries</h3>
+            <p class="venue__text">Vente au comptoir, stock d'ingrédients suivi.</p>
+          </div>
+        </article>
+        <article class="venue">
+          <div class="venue__media venue__media--empty"><span>photo — enseigne / groupe</span></div>
+          <div class="venue__body">
+            <h3 class="venue__title">Groupes multi-établissements</h3>
+            <p class="venue__text">Plusieurs points de vente, une même façon de travailler.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ CHIFFRES & TÉMOIGNAGES ============================ -->
+  <section class="section" aria-label="Chiffres et témoignages">
+    <div class="wrap">
+      <div class="stats" data-reveal>
+        <div class="stat">
+          <p class="stat__num">—</p>
+          <p class="stat__label">Établissements équipés</p>
+          <p class="stat__note">chiffre à renseigner</p>
+        </div>
+        <div class="stat">
+          <p class="stat__num">—</p>
+          <p class="stat__label">Commandes traitées</p>
+          <p class="stat__note">chiffre à renseigner</p>
+        </div>
+        <div class="stat">
+          <p class="stat__num">—</p>
+          <p class="stat__label">Villes couvertes</p>
+          <p class="stat__note">chiffre à renseigner</p>
+        </div>
+      </div>
+
+      <div class="quotes" data-reveal>
+        <figure class="quote">
+          <blockquote>« Témoignage client à insérer — une phrase courte sur le service. »</blockquote>
+          <figcaption>
+            <span class="quote__avatar" aria-hidden="true"></span>
+            <span><span class="quote__name">Nom du client</span><span class="quote__role">Gérant · Établissement</span></span>
+          </figcaption>
+        </figure>
+        <figure class="quote">
+          <blockquote>« Témoignage client à insérer — un bénéfice concret et mesurable. »</blockquote>
+          <figcaption>
+            <span class="quote__avatar" aria-hidden="true"></span>
+            <span><span class="quote__name">Nom du client</span><span class="quote__role">Propriétaire · Établissement</span></span>
+          </figcaption>
+        </figure>
+        <figure class="quote">
+          <blockquote>« Témoignage client à insérer — la prise en main par l'équipe. »</blockquote>
+          <figcaption>
+            <span class="quote__avatar" aria-hidden="true"></span>
+            <span><span class="quote__name">Nom du client</span><span class="quote__role">Responsable salle · Établissement</span></span>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ CTA ============================ -->
+  <section class="section" id="contact">
+    <div class="wrap cta-wrap">
+      <div class="beans" aria-hidden="true">
+        <span class="bean bean--1"></span><span class="bean bean--2"></span><span class="bean bean--3"></span>
+        <span class="bean bean--4"></span><span class="bean bean--5"></span><span class="bean bean--6"></span>
+        <span class="bean bean--7"></span><span class="bean bean--8"></span><span class="bean bean--9"></span>
+        <span class="bean bean--10"></span><span class="bean bean--11"></span><span class="bean bean--12"></span>
+        <span class="bean bean--13"></span><span class="bean bean--14"></span>
+      </div>
+
+      <svg width="0" height="0" class="svg-defs" aria-hidden="true" focusable="false"><defs>
+        <clipPath id="caflo-stain-clip" clipPathUnits="objectBoundingBox"><path d="M0.128,0.170 C0.155,0.045 0.300,0.015 0.420,0.048 C0.550,0.075 0.620,0.028 0.720,0.040 C0.860,0.055 0.972,0.105 0.976,0.260 C0.980,0.345 0.928,0.385 0.938,0.460 C0.948,0.540 1.002,0.625 0.958,0.760 C0.928,0.872 0.840,0.962 0.700,0.955 C0.560,0.948 0.460,0.992 0.340,0.940 C0.220,0.898 0.098,0.862 0.055,0.740 C0.012,0.628 0.004,0.520 0.035,0.440 C0.062,0.372 0.116,0.340 0.126,0.282 C0.133,0.240 0.100,0.212 0.128,0.170 Z"></path></clipPath>
+        <clipPath id="caflo-footer-clip" clipPathUnits="objectBoundingBox"><path d="M0,0.135 C0.012,0.085 0.045,0.052 0.098,0.050 C0.112,0.024 0.150,0.010 0.205,0.016 C0.330,0.030 0.430,0.056 0.545,0.050 C0.700,0.042 0.850,0.014 1,0 L1,1 L0,1 Z"></path></clipPath>
+      </defs></svg>
+
+      <div class="cta" id="tarifs" data-reveal>
+        <div class="cta__glow" aria-hidden="true"></div>
+        <div class="cta__inner">
+          <h2 class="cta__title">Prêt à moderniser votre restaurant ?</h2>
+          <p class="cta__text">Une démonstration de 20 minutes suffit pour voir Caflo tourner sur un vrai service.</p>
+          <div class="cta__actions">
+            <a class="btn btn--cream" href="mailto:contact@caflo.dz?subject=Demande%20de%20d%C3%A9monstration%20Caflo&amp;body=Bonjour%2C%0A%0AJe%20souhaite%20une%20d%C3%A9monstration%20de%20Caflo.%0A%0A%C3%89tablissement%20%3A%20%0AVille%20%3A%20%0AT%C3%A9l%C3%A9phone%20%3A%20%0A%0AMerci.">Demander une démonstration</a>
+            <a class="btn btn--ghost" href="tel:+213673356165">+213 673 35 61 65</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- ============================ FOOTER ============================ -->
+  <div class="footer-shell">
+    <div class="beans beans--footer" aria-hidden="true">
+      <span class="bean bean--f1"></span><span class="bean bean--f2"></span>
+      <span class="bean bean--f3"></span><span class="bean bean--f4"></span>
+    </div>
+
+    <footer class="footer">
+      <div class="wrap footer__top">
+        <div class="footer__col footer__col--wide">
+          <h2 class="footer__h">
+            <span class="footer__icon" aria-hidden="true">✉</span>
+            Par e-mail :
+          </h2>
+          <div class="footer__block">
+            <a class="footer__mail" href="mailto:contact@caflo.dz">contact@caflo.dz</a>
+            <p>Sur notre page Facebook :<br>CAFLO</p>
+            <p>Notre équipe est à votre disposition du dimanche au jeudi de 9H à 17H.</p>
+            <p>Nous vous remercions de votre compréhension.</p>
+          </div>
+        </div>
+        <div class="footer__col">
+          <h2 class="footer__h">Liens</h2>
+          <nav class="footer__links" aria-label="Liens de pied de page">
+            <a href="#produit">Produit</a>
+            <a href="#fonctionnalites">Fonctionnalités</a>
+            <a href="#versions">Versions</a>
+            <a href="#contact">Contact</a>
+            <a href="mailto:contact@caflo.dz?subject=Support%20Caflo">Support</a>
+            <a href="#contact">Mentions légales</a>
+          </nav>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <div class="wrap footer__meta">
+          <div>
+            <p class="footer__small">Langue</p>
+            <button class="lang" type="button" aria-label="Choisir la langue — Français">
+              Français <span aria-hidden="true">▾</span>
+            </button>
+          </div>
+          <ul class="badges">
+            <li>Espèces</li>
+            <li>Carte</li>
+            <li>TPE</li>
+            <li>Ticket resto</li>
+            <li>Windows</li>
+          </ul>
+        </div>
+        <div class="footer__sign">
+          <img src="img/caflo-wordmark-light.webp" alt="Caflo" width="520" height="158" loading="lazy">
+          <p>© <span id="year">2026</span>, Caflo — Système de caisse sécurisé</p>
+        </div>
+      </div>
+
+      <a class="to-top" href="#top" aria-label="Revenir en haut de la page"><span aria-hidden="true">↑</span></a>
+    </footer>
+  </div>
+
+</div>
+
+<script src="main.js" defer></script>
+</body>
+</html>

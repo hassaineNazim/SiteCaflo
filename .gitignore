@@ -1,0 +1,12 @@
+# Maquette d'origine (27 Mo d'images sources) — non nécessaire au site
+_design/
+
+# Système / éditeurs
+Thumbs.db
+Desktop.ini
+.DS_Store
+.vscode/
+.idea/
+
+# Node (si un outillage est ajouté plus tard)
+node_modules/

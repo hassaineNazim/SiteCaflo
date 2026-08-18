@@ -15,6 +15,23 @@ const DUREE_ESSAI_JOURS = 2;
 const FORMULES = ['caisse', 'salle', 'express', 'suite'];
 const MAX_ESSAIS_PAR_IP_PAR_JOUR = 5;
 
+// Chaque formule a son propre installeur d'essai : ce sont quatre builds
+// distinctes, avec chacune son identifiant et son dossier de données. La durée
+// est fixée dans le binaire, pas par une clé — le formulaire ne sert donc plus
+// qu'à savoir qui essaie, et à renvoyer le bon fichier.
+const INSTALLEURS = {
+  caisse: 'Caflo-Caisse-Essai-Setup.exe',
+  salle: 'Caflo-Salle-Essai-Setup.exe',
+  express: 'Caflo-Express-Essai-Setup.exe',
+  suite: 'Caflo-Suite-Essai-Setup.exe',
+};
+
+/** URL_TELECHARGEMENT est le préfixe de la release, sans nom de fichier. */
+function lienTelechargement(env, formule) {
+  const base = String(env.URL_TELECHARGEMENT ?? '').replace(/\/+$/, '');
+  return `${base}/${INSTALLEURS[formule] ?? INSTALLEURS.suite}`;
+}
+
 /* ---------------------------------------------------------------
    Utilitaires
    --------------------------------------------------------------- */
@@ -128,7 +145,7 @@ async function demanderEssai(request, env, origine) {
       cle: existant.cle,
       formule: existant.formule,
       deja_demande: true,
-      telechargement: env.URL_TELECHARGEMENT,
+      telechargement: lienTelechargement(env, existant.formule),
     }, 200, origine);
   }
 
@@ -151,7 +168,7 @@ async function demanderEssai(request, env, origine) {
     nettoyer(request.headers.get('user-agent'), 200)
   ).run();
 
-  return json({ cle, formule, telechargement: env.URL_TELECHARGEMENT }, 200, origine);
+  return json({ cle, formule, telechargement: lienTelechargement(env, formule) }, 200, origine);
 }
 
 /* ---------------------------------------------------------------

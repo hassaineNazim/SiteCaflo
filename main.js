@@ -10,15 +10,37 @@
   var CONFIG = {
     // URL du Worker Cloudflare (dossier serveur-licence/)
     apiLicence: 'https://caflo-licence.exemple.workers.dev',
-    // Dépôt GitHub qui héberge les installeurs
-    depotReleases: 'hassaineNazim/caflo-releases',
-    // Nom de l'asset, SANS numéro de version : c'est ce qui fait
-    // fonctionner l'URL /releases/latest/download/
-    fichierInstalleur: 'Caflo-Setup.exe'
+    // Dépôt des mises à jour de production. NE PAS y publier les essais :
+    // l'updater de l'app lit releases/latest/download/latest.json, et une
+    // release plus récente sans ce fichier couperait les mises à jour de tous
+    // les postes déjà installés.
+    depotReleases: 'Djalal01/caflo-release',
+    // Dépôt distinct pour les essais, pour cette raison exactement.
+    depotEssais: 'Djalal01/caflo-essais',
+    // Un installeur d'essai PAR formule : chacun est une build distincte,
+    // avec son propre dossier de données. Noms SANS numéro de version —
+    // c'est ce qui fait fonctionner l'URL /releases/latest/download/.
+    installeurs: {
+      caisse: 'Caflo-Caisse-Essai-Setup.exe',
+      salle: 'Caflo-Salle-Essai-Setup.exe',
+      express: 'Caflo-Express-Essai-Setup.exe',
+      suite: 'Caflo-Suite-Essai-Setup.exe'
+    },
+    formuleParDefaut: 'suite',
+    // Tant que le Worker de capture n'est pas déployé, les boutons d'essai
+    // téléchargent directement au lieu d'ouvrir un formulaire qui ne peut
+    // aboutir. Repasser à false une fois apiLicence renseignée : la modale et
+    // son code sont intacts.
+    telechargementDirect: true
   };
 
-  CONFIG.urlTelechargement = 'https://github.com/' + CONFIG.depotReleases +
-    '/releases/latest/download/' + CONFIG.fichierInstalleur;
+  CONFIG.lienInstalleur = function (formule) {
+    var fichier = CONFIG.installeurs[formule] || CONFIG.installeurs[CONFIG.formuleParDefaut];
+    return 'https://github.com/' + CONFIG.depotEssais +
+      '/releases/latest/download/' + fichier;
+  };
+
+  CONFIG.urlTelechargement = CONFIG.lienInstalleur(CONFIG.formuleParDefaut);
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -276,7 +298,7 @@
       if (formule && champFormule) champFormule.value = formule;
       modal.hidden = false;
       document.body.style.overflow = 'hidden';
-      var premier = succes.hidden ? document.getElementById('f-nom') : document.getElementById('copier-cle');
+      var premier = succes.hidden ? document.getElementById('f-nom') : document.getElementById('succes-lien');
       if (premier) premier.focus();
     }
 
@@ -290,6 +312,12 @@
       var declencheur = e.target.closest('[data-ouvrir-essai]');
       if (declencheur) {
         e.preventDefault();
+        if (CONFIG.telechargementDirect) {
+          window.location.href = CONFIG.lienInstalleur(
+            declencheur.dataset.formule || CONFIG.formuleParDefaut
+          );
+          return;
+        }
         ouvrir(declencheur.dataset.formule);
         return;
       }
@@ -353,16 +381,26 @@
         .then(function (res) {
           if (!res.ok) throw new Error(res.corps.erreur || 'Demande refusée.');
 
-          document.getElementById('succes-cle').textContent = res.corps.cle;
-          document.getElementById('succes-lien').href = res.corps.telechargement || CONFIG.urlTelechargement;
+          // L'essai est limité dans le binaire lui-même : rien à saisir au
+          // premier lancement. Le serveur peut imposer son lien ; sinon on
+          // le déduit de la formule choisie dans le formulaire.
+          var formule = res.corps.formule || donnees.formule || CONFIG.formuleParDefaut;
+          var lien = res.corps.telechargement || CONFIG.lienInstalleur(formule);
+          document.getElementById('succes-lien').href = lien;
+
+          var nomFichier = document.getElementById('succes-fichier');
+          if (nomFichier) {
+            nomFichier.textContent =
+              CONFIG.installeurs[formule] || CONFIG.installeurs[CONFIG.formuleParDefaut];
+          }
           if (res.corps.deja_demande) {
             document.getElementById('succes-intro').textContent =
-              'Une clé avait déjà été émise pour ce numéro — c’est la même, elle reste valable.';
+              'Vous aviez déjà demandé un essai avec ce numéro — voici à nouveau votre téléchargement.';
           }
           form.hidden = true;
           succes.hidden = false;
           boite.scrollTop = 0;
-          document.getElementById('copier-cle').focus();
+          document.getElementById('succes-lien').focus();
         })
         .catch(function (err) {
           afficherErreur(
@@ -373,22 +411,9 @@
         })
         .then(function () {
           envoyer.disabled = false;
-          envoyer.textContent = 'Obtenir ma clé et télécharger';
+          envoyer.textContent = 'Recevoir mon lien de téléchargement';
         });
     });
-
-    var copier = document.getElementById('copier-cle');
-    if (copier) {
-      copier.addEventListener('click', function () {
-        var cle = document.getElementById('succes-cle').textContent;
-        var fini = function () {
-          copier.textContent = 'Copiée';
-          setTimeout(function () { copier.textContent = 'Copier'; }, 2000);
-        };
-        if (navigator.clipboard) navigator.clipboard.writeText(cle).then(fini, function () {});
-        else fini();
-      });
-    }
   })();
 
   /* ---------------------------------------------------------
@@ -399,12 +424,16 @@
     var champTaille = document.getElementById('dl-taille');
     if (!champVersion || !champTaille) return;
 
-    fetch('https://api.github.com/repos/' + CONFIG.depotReleases + '/releases/latest')
+    fetch('https://api.github.com/repos/' + CONFIG.depotEssais + '/releases/latest')
       .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
       .then(function (release) {
         champVersion.textContent = release.tag_name || '—';
+        // Les quatre essais pèsent le même poids à quelques Mo près ; on
+        // affiche celui de la formule par défaut plutôt qu'un chiffre par
+        // formule, qui n'apprendrait rien de plus au visiteur.
+        var reference = CONFIG.installeurs[CONFIG.formuleParDefaut];
         var asset = (release.assets || []).filter(function (a) {
-          return a.name === CONFIG.fichierInstalleur;
+          return a.name === reference;
         })[0];
         if (asset) champTaille.textContent = (asset.size / 1048576).toFixed(0) + ' Mo';
       })

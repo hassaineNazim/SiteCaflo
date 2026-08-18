@@ -556,12 +556,12 @@
         <div class="dl__copy">
           <p class="kicker">Essai gratuit</p>
           <h2 class="h2 h2--sm">Testez Caflo pendant 2 jours.</h2>
-          <p class="lede">Un seul installeur pour les quatre formules : la clé que vous recevez débloque la vôtre. Pas de carte bancaire, pas d'intervention à distance — vous téléchargez, vous installez, vous encaissez.</p>
+          <p class="lede">Un installeur par formule, avec une carte de démonstration déjà en place. Pas de carte bancaire, pas de clé à saisir, pas d'intervention à distance — vous téléchargez, vous installez, vous encaissez.</p>
           <ul class="dl__points">
             <li><span class="dl__check" aria-hidden="true">✓</span>Toutes les fonctionnalités de la formule choisie</li>
-            <li><span class="dl__check" aria-hidden="true">✓</span>Vos données restent sur votre poste</li>
-            <li><span class="dl__check" aria-hidden="true">✓</span>Connexion internet requise une seule fois, à l'activation</li>
-            <li><span class="dl__check" aria-hidden="true">✓</span>À la fin de l'essai, rien n'est effacé : votre carte et vos réglages vous attendent</li>
+            <li><span class="dl__check" aria-hidden="true">✓</span>Une carte de démonstration prête : vous encaissez dès l'ouverture</li>
+            <li><span class="dl__check" aria-hidden="true">✓</span>Vos données restent sur votre poste — aucune connexion requise</li>
+            <li><span class="dl__check" aria-hidden="true">✓</span>L'essai s'installe à côté de la version complète, sans rien écraser</li>
           </ul>
         </div>
 
@@ -833,31 +833,26 @@
       <p class="form__erreur" id="form-erreur" role="alert" hidden></p>
 
       <button class="btn btn--dark btn--block" type="submit" id="form-envoyer">
-        Obtenir ma clé et télécharger
+        Recevoir mon lien de téléchargement
       </button>
 
       <p class="form__note">Votre numéro nous sert uniquement à vous accompagner sur l'installation. Aucune revente, aucun envoi automatique.</p>
     </form>
 
-    <!-- Étape 2 — clé délivrée -->
+    <!-- Étape 2 — lien de téléchargement -->
     <div class="succes" id="essai-succes" hidden>
       <p class="succes__pastille" aria-hidden="true">✓</p>
-      <h2 class="modal__titre">Votre clé d'essai</h2>
-      <p class="modal__intro" id="succes-intro">Notez-la : elle vous sera demandée au premier lancement de Caflo.</p>
-
-      <p class="succes__cle">
-        <code id="succes-cle">CAFLO-XXXX-XXXX-XXXX</code>
-        <button class="succes__copier" type="button" id="copier-cle">Copier</button>
-      </p>
+      <h2 class="modal__titre">Votre essai est prêt</h2>
+      <p class="modal__intro" id="succes-intro">Rien à saisir : l'essai est déjà actif dans le fichier ci-dessous.</p>
 
       <a class="btn btn--dark btn--block" id="succes-lien" href="#" download>
         Télécharger Caflo pour Windows <span class="btn__arrow" aria-hidden="true">↓</span>
       </a>
 
       <ol class="succes__etapes">
-        <li>Lancez <code>Caflo-Setup.exe</code> et suivez l'installation.</li>
+        <li>Lancez <code id="succes-fichier">Caflo-Suite-Essai-Setup.exe</code> et suivez l'installation.</li>
         <li>Windows peut afficher un avertissement : cliquez sur <strong>Informations complémentaires</strong> puis <strong>Exécuter quand même</strong>.</li>
-        <li>Au premier démarrage, saisissez la clé ci-dessus. Vos 2 jours commencent à ce moment-là.</li>
+        <li>Ouvrez Caflo : la carte de démonstration est déjà en place. Vos 2 jours démarrent à ce premier lancement.</li>
       </ol>
 
       <a class="dl__guide" href="installer.html">Guide d'installation détaillé <span aria-hidden="true">→</span></a>

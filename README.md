@@ -43,58 +43,68 @@ et le bloc JSON-LD) et `robots.txt` / `sitemap.xml`.
 
 ## Essai gratuit — mise en route
 
-Trois étapes, dans cet ordre.
+### 1. Héberger les installeurs d'essai
 
-### 1. Héberger l'installeur
-
-Créer un dépôt GitHub **séparé** `caflo-releases`, publier une *release* et y
-attacher l'installeur nommé **`Caflo-Setup.exe`**, sans numéro de version dans le
-nom de fichier — c'est ce qui fait fonctionner l'URL permanente :
+Créer un dépôt GitHub **public et séparé** `caflo-essais`, publier une *release*
+et y attacher les **quatre** installeurs, nommés exactement :
 
 ```
-https://github.com/hassaineNazim/caflo-releases/releases/latest/download/Caflo-Setup.exe
+Caflo-Caisse-Essai-Setup.exe
+Caflo-Salle-Essai-Setup.exe
+Caflo-Express-Essai-Setup.exe
+Caflo-Suite-Essai-Setup.exe
 ```
 
-Gratuit, 2 Go par fichier, téléchargements illimités. Le site lit aussi le
-numéro de version et le poids du fichier via l'API GitHub, et les affiche dans
-la section « Essai gratuit ».
+Sans numéro de version dans le nom : c'est ce qui fait fonctionner l'URL
+permanente `…/releases/latest/download/<fichier>`, et donc les boutons du site
+sans avoir à les modifier à chaque release.
 
-### 2. Déployer le serveur de licences
+**Ne pas publier les essais dans `caflo-release`.** Ce dépôt sert aux mises à
+jour de production : l'updater lit `releases/latest/download/latest.json`, et
+une release plus récente dépourvue de ce fichier couperait les mises à jour de
+tous les postes déjà installés.
+
+Gratuit, 2 Go par fichier, téléchargements illimités. Le site lit le numéro de
+version et le poids via l'API GitHub et les affiche dans la section « Essai
+gratuit » ; tant qu'aucune release n'existe, il affiche « bientôt disponible ».
+
+### 2. Le formulaire de capture (facultatif)
+
+`main.js` est livré avec `CONFIG.telechargementDirect = true` : les boutons
+d'essai téléchargent directement, sans formulaire. C'est le mode à garder tant
+que le Worker n'est pas déployé.
+
+Pour récupérer les coordonnées des prospects, déployer le Worker puis repasser
+`telechargementDirect` à `false` — la modale et son code sont intacts.
 
 ```bash
 cd serveur-licence
 npm install -g wrangler
 wrangler d1 create caflo-licences          # copier l'id dans wrangler.toml
 wrangler d1 execute caflo-licences --remote --file=schema.sql
-node scripts/generer-cles.mjs              # génère la paire Ed25519
-wrangler secret put CLE_PRIVEE_JWK         # coller la clé PRIVÉE
 wrangler deploy
 ```
 
-Reporter l'URL du Worker dans `main.js` (`CONFIG.apiLicence`) et la clé
-**publique** dans `integration-electron/licence.js`.
+Reporter l'URL du Worker dans `main.js` (`CONFIG.apiLicence`), et ajouter le
+domaine de production dans `ORIGINES_AUTORISEES` (`wrangler.toml`) — sinon le
+CORS bloquera le formulaire en ligne.
 
 Tout tient dans les paliers gratuits de Cloudflare (100 000 requêtes/jour,
 base D1 de 5 Go).
 
-### 3. Brancher l'application
+### Comment fonctionne l'essai
 
-Voir `integration-electron/README.md`. En résumé : un seul installeur pour les
-quatre formules, c'est le jeton signé qui débloque les modules.
+La limite de 2 jours est **dans le binaire** : quatre builds distinctes, chacune
+avec son identifiant et son dossier de données, installables à côté de la
+version complète sans rien écraser. Le visiteur n'a aucune clé à saisir, et
+l'essai démarre au premier lancement.
 
-**Comment fonctionne l'essai.** Le site délivre une clé `CAFLO-XXXX-XXXX-XXXX`
-contre le formulaire. Au premier lancement, l'application échange cette clé
-contre un jeton signé Ed25519 contenant la date d'expiration, et se lie au poste
-via son `MachineGuid`. Les 2 jours démarrent **à l'activation**, pas au
-téléchargement. Ensuite tout est vérifié hors ligne. Réinstaller ne relance pas
-l'essai : le serveur renvoie la même date d'expiration pour le même poste.
-
-À l'expiration, l'application se verrouille **sans supprimer les données** — la
-carte et les réglages saisis pendant l'essai doivent survivre au passage en
-formule payante.
-
-Pour changer la durée : `DUREE_ESSAI_JOURS` dans `serveur-licence/src/index.js`,
-puis redéployer. Les essais déjà activés gardent leur date d'origine.
+Le serveur de licences (clés `CAFLO-XXXX-XXXX-XXXX`, jetons Ed25519, activation
+liée au `MachineGuid`) reste dans `serveur-licence/` et `integration-electron/`.
+Il n'est pas utilisé par ce modèle ; il sert de base si vous voulez plus tard
+une activation en ligne ou une révocation à distance. À noter :
+`integration-electron/` suppose Node dans le processus principal, alors que
+l'application est bâtie avec Tauri — un portage serait nécessaire.
 
 ### À prévoir : signature du code
 
@@ -129,7 +139,7 @@ Repris tels quels de la maquette, ils attendent les vraies données :
 - Le **parcours d'une commande** défile automatiquement toutes les 4,2 s, se met
   en pause hors écran ou quand l'onglet est en arrière-plan, et s'arrête dès que
   le visiteur clique une étape. Navigable au clavier (flèches, Début, Fin).
-- Le **menu mobile** apparaît sous 1120 px (la maquette masquait simplement la
+- Le **menu mobile** apparaît sous 1220 px (la maquette masquait simplement la
   navigation).
 - Respect de `prefers-reduced-motion`, styles d'impression, et repli `<noscript>`.
 - Les boutons « Demander une démonstration » ouvrent un e-mail prérempli vers

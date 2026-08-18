@@ -6,7 +6,9 @@ compatibility_date = "2026-01-15"
 # par défaut. Ajoutez votre domaine de production dès qu'il est en ligne.
 [vars]
 ORIGINES_AUTORISEES = "https://caflo.dz,https://www.caflo.dz,http://localhost:4321"
-URL_TELECHARGEMENT = "https://github.com/hassaineNazim/caflo-releases/releases/latest/download/Caflo-Setup.exe"
+# Préfixe de la release d'essai, SANS nom de fichier : le Worker y ajoute
+# l'installeur correspondant à la formule demandée.
+URL_TELECHARGEMENT = "https://github.com/Djalal01/caflo-essais/releases/latest/download"
 
 [[d1_databases]]
 binding = "DB"
